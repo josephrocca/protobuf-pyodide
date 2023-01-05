@@ -1,0 +1,64 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>Protobuf Pyodide/Web Demo</title>
+</head>
+<body>
+  <p>Open browser console to see result</p>
+  
+  <script src="https://cdn.jsdelivr.net/pyodide/v0.22.0/full/pyodide.js"></script>
+  <script type="module">
+    window.pyodide = await loadPyodide();
+    await pyodide.loadPackage("micropip");
+
+    // Add addressbook.proto file to Pyodide filesystem:
+    let tokenizerJsonText = await fetch("./addressbook_pb2.py").then(r => r.text())
+    pyodide.FS.writeFile("./addressbook_pb2.py", tokenizerJsonText, { encoding: "utf8" });
+
+    /*
+      Note: To create the addressbook_pb2.py file you need to compile the associated `proto` file, like this:
+        wget https://gist.githubusercontent.com/josephrocca/f9184834444be2515b264aca2c9e7fde/raw/cc25a18b1e4d9a71bd99c8343bd31bfd43116e85/addressbook.proto
+        protoc -I=. --python_out=. addressbook.proto
+      But you need to install `protoc` first, like this (on Linux):
+        wget https://github.com/protocolbuffers/protobuf/releases/download/v21.12/protoc-21.12-linux-x86_64.zip
+        sudo unzip -o protoc-21.12-linux-x86_64.zip -d /usr/local bin/protoc
+        sudo unzip -o protoc-21.12-linux-x86_64.zip -d /usr/local 'include/*'
+    */
+
+    console.log(await pyodide.runPythonAsync(`
+      import sys
+      print(sys.version)
+      import os
+      print(os.getcwd())
+ 
+      import micropip
+      await micropip.install('./protobuf-4.21.12-py2.py3-none-any.whl')
+
+      import addressbook_pb2
+      person = addressbook_pb2.Person()
+      person.id = 1234
+      person.name = "Jane Doe"
+      person.email = "jdoe@example.com"
+      phone = person.phones.add()
+      phone.number = "555-4321"
+      phone.type = addressbook_pb2.Person.HOME
+
+      print(person.name)
+      print(person.IsInitialized())
+
+      try:
+        person.no_such_field = 1   # raises AttributeError
+      except AttributeError:
+        print("nice")
+
+      try:
+        person.id = "1234"  # raises TypeError
+      except TypeError:
+        print("cool")
+    `));
+  </script>
+</body>
+</html>
