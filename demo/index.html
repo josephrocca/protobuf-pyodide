@@ -14,7 +14,7 @@
     window.pyodide = await loadPyodide();
     await pyodide.loadPackage("micropip");
 
-    // Add addressbook.proto file to Pyodide filesystem:
+    // Add compiled addressbook.proto file to Pyodide filesystem:
     let tokenizerJsonText = await fetch("./addressbook_pb2.py").then(r => r.text())
     pyodide.FS.writeFile("./addressbook_pb2.py", tokenizerJsonText, { encoding: "utf8" });
 
