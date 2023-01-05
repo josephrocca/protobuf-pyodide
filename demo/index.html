@@ -31,8 +31,6 @@
     console.log(await pyodide.runPythonAsync(`
       import sys
       print(sys.version)
-      import os
-      print(os.getcwd())
  
       import micropip
       await micropip.install('./protobuf-4.21.12-py2.py3-none-any.whl')
