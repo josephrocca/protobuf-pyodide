@@ -1,6 +1,9 @@
 # Protobuf Pyodide
 Protobuf build instructions for Pyodide and simple demo of it running in the browser (this will likely become obsolete soon as it'll be integrated into the Pyodide package listing if all goes well)
 
+* whl: https://github.com/josephrocca/protobuf-pyodide/raw/main/demo/protobuf-4.21.12-py2.py3-none-any.whl
+* demo: https://josephrocca.github.io/protobuf-pyodide/demo
+
 # Build:
 
 ```bash
