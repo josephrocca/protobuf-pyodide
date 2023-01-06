@@ -14,7 +14,8 @@ cd protobuf
 pip install pyodide-build
 git clone https://github.com/emscripten-core/emsdk
 cd emsdk
-./emsdk install $(pyodide config get emscripten_version) # NOTE: this seems flaky for some reason - if you get an error like `error: tool or SDK not found: 'Downloading'`, just try again
+pyodide config get emscripten_version  # this line is needed due to: https://github.com/pyodide/pyodide/issues/3430
+./emsdk install $(pyodide config get emscripten_version)
 ./emsdk activate $(pyodide config get emscripten_version)
 source emsdk_env.sh
 cd ../
