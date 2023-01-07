@@ -7,8 +7,8 @@ Protobuf build instructions for Pyodide and simple demo of it running in the bro
 # Build:
 
 ```bash
-git clone --single-branch v21.12 https://github.com/protocolbuffers/protobuf # this is v4.21.12 (not sure why in some github tagged versions they don't include the major version number)
-# git clone --single-branch v3.20.3 https://github.com/protocolbuffers/protobuf # latest v3 version as of writing
+git clone --branch v21.12 https://github.com/protocolbuffers/protobuf # this is v4.21.12 (not sure why in some github tagged versions they don't include the major version number)
+# git clone --branch v3.20.3 https://github.com/protocolbuffers/protobuf # latest v3 version as of writing
 cd protobuf
 
 # pyodide setup:
